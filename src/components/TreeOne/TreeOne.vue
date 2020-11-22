@@ -4,7 +4,7 @@
  * @Author: QinJiaJun
  * @Date: 2020-11-21 00:24:46
  * @LastEditors: sueRimn
- * @LastEditTime: 2020-11-22 10:18:01
+ * @LastEditTime: 2020-11-22 18:34:46
 -->
 <template>
   <div id="TreeOne">
@@ -20,7 +20,9 @@
         <div class="Tree-row-firstDiv" @click="select($event, item, index)">
           <span :class="circleShow === false ? 'squareOutSide' : ''"
             ><div
-              :style="{ background: circleShow ? '' : colorArr[index] }"
+              :style="{
+                background: circleShow ? circleCurColor : colorArr[index],
+              }"
               :class="{ squareInSide: !circleShow, circle: circleShow }"
             ></div
           ></span>
@@ -40,7 +42,8 @@
           :treeData="item.children"
           v-if="item.children && indexArr[index]"
           :circleShow="true"
-          :class="{ selectDown: indexArr[index]}"
+          :class="{ selectDown: indexArr[index] ,childrenItem : item.children }"
+          :circleCurColor="item.color"
         ></TreeOne>
       </div>
     </div>
@@ -55,6 +58,7 @@ export default {
       curIndex: null,
       indexArr: [],
       colorArr: ["#4F9EFD", "#FF913F", "#00EA9C"], //这里设置一级的方块颜色
+      circleLeft: 50,
     };
   },
   props: {
@@ -68,28 +72,30 @@ export default {
       type: Boolean,
       default: false,
     },
-    curColor: {
+    circleCurColor: {
       type: String,
       default: "",
     },
   },
   methods: {
-    //v-if对数组的直接布尔值不生效，需要加个属性 试试用v-else
+    //indexArr后面添加的属性不是响应式，需要用$set
     select(e, item, index) {
       if (!item.children) return;
-      if(this.indexArr[index] == false){
-        this.$set(this.indexArr,index,true)
-      }else{
-        this.$set(this.indexArr,index,false)
+      if (this.indexArr[index] == false) {
+        this.$set(this.indexArr, index, true);
+      } else {
+        this.$set(this.indexArr, index, false);
       }
-      console.log(this.indexArr[index])
+      this.curIndex = index;
+      console.log(e, item, index, "3");
     },
   },
   created() {
     this.indexArr = new Array(3);
     for (let i = 0; i < this.indexArr.length; i++) {
-      this.indexArr[i] = false
+      this.indexArr[i] = false;
     }
+    console.log(this.treeData, "this.treeData");
   },
 };
 </script>
@@ -118,9 +124,6 @@ export default {
           width: 122px;
           margin-right: 26px;
         }
-        //  &:nth-child(4){
-        //   width:104px;
-        // }
       }
       .squareOutSide {
         width: 16px;
@@ -132,13 +135,12 @@ export default {
         .squareInSide {
           width: 12px;
           height: 12px;
-          background: red;
         }
       }
       .circle {
         width: 8px;
         height: 8px;
-        margin-left: 12px;
+        transform: translateX(50%);
         border-radius: 50%;
       }
     }
@@ -156,12 +158,12 @@ export default {
     transform: rotate(180deg);
     transition: all 0.7s;
   }
-  .selectDown {
-    max-height: 200px;
-    transition: all 1.7s;
-  }
-  .test {
-    color: red;
-  }
+  // .selectDown {
+  //   max-height: 200px;
+  //   transition: all 1.7s;
+  // }
+  // .childrenItem{
+  //   margin-left:20px
+  // }
 }
 </style>

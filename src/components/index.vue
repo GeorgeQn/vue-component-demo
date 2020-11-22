@@ -4,7 +4,7 @@
  * @Author: QinJiaJun
  * @Date: 2020-11-20 23:59:16
  * @LastEditors: sueRimn
- * @LastEditTime: 2020-11-21 22:48:46
+ * @LastEditTime: 2020-11-22 13:40:21
 -->
 <template>
   <div class="index">
@@ -21,7 +21,7 @@
     <TreeOne
       v-if="componentShow === 'TreeOne'"
       :treeData="treeData"
-      style="width: 400px; height: 250px"
+      style="width: 500px"
     ></TreeOne>
     <TreeTwo
       v-if="componentShow === 'TreeTwo'"
@@ -71,6 +71,16 @@ export default {
                       totalInvestment: "44",
                       projectNum: "56",
                     },
+                    {
+                      projectType: "635",
+                      totalInvestment: "44",
+                      projectNum: "56",
+                    },
+                    {
+                      projectType: "635",
+                      totalInvestment: "44",
+                      projectNum: "56",
+                    },
                   ],
                 },
               ],
@@ -81,6 +91,20 @@ export default {
           projectType: "产业建设",
           totalInvestment: "134",
           projectNum: "14",
+          children: [
+            {
+              projectType: "635",
+              totalInvestment: "44",
+              projectNum: "56",
+              children: [
+                {
+                  projectType: "产业建设",
+                  totalInvestment: "134",
+                  projectNum: "14",
+                },
+              ],
+            },
+          ],
         },
         {
           projectType: "社会民生",
@@ -97,6 +121,16 @@ export default {
               totalInvestment: "524",
               projectNum: "34",
               children: [
+                {
+                  projectType: "子类型23",
+                  totalInvestment: "524",
+                  projectNum: "34",
+                },
+                {
+                  projectType: "子类型23",
+                  totalInvestment: "524",
+                  projectNum: "34",
+                },
                 {
                   projectType: "子类型23",
                   totalInvestment: "524",
